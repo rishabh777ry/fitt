@@ -44,38 +44,38 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyAwQVlJk22udEVKaZuMjpKBy6kWEunLJJw',
-    appId: '1:617009152460:web:8c25b7801fc4cf4ba11d69',
-    messagingSenderId: '617009152460',
-    projectId: 'kriyetaaa',
-    authDomain: 'kriyetaaa.firebaseapp.com',
-    storageBucket: 'kriyetaaa.appspot.com',
-    measurementId: 'G-QPGPKVR0VL',
+    apiKey: 'AIzaSyDFVYFUlvYTfGPqgvkcp9K6It_AABbZfME',
+    appId: '1:485014065632:web:ed981953f459045c021b85',
+    messagingSenderId: '485014065632',
+    projectId: 'fitbit-2763f',
+    authDomain: 'fitbit-2763f.firebaseapp.com',
+    storageBucket: 'fitbit-2763f.appspot.com',
+    measurementId: 'G-BBXCXHJJH8',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCHRieA5_fz0ZFRwgY-4_g8ApcX9y3zrmc',
-    appId: '1:617009152460:android:25c3786c989e2c9ba11d69',
-    messagingSenderId: '617009152460',
-    projectId: 'kriyetaaa',
-    storageBucket: 'kriyetaaa.appspot.com',
+    apiKey: 'AIzaSyBmTWTyAjI2cDcA0kozKDqSo54RgXcCJBc',
+    appId: '1:485014065632:android:06c4496dec6a657d021b85',
+    messagingSenderId: '485014065632',
+    projectId: 'fitbit-2763f',
+    storageBucket: 'fitbit-2763f.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBowJxnqIPMdMRy2055H1b0xE46Vume-jA',
-    appId: '1:617009152460:ios:f3000d84fa47acbda11d69',
-    messagingSenderId: '617009152460',
-    projectId: 'kriyetaaa',
-    storageBucket: 'kriyetaaa.appspot.com',
-    iosBundleId: 'com.example.kriyeta',
+    apiKey: 'AIzaSyDdhxCJQOOEPTHzNMxAzpCCxMSA8HTnZwE',
+    appId: '1:485014065632:ios:270d6c3abe906161021b85',
+    messagingSenderId: '485014065632',
+    projectId: 'fitbit-2763f',
+    storageBucket: 'fitbit-2763f.appspot.com',
+    iosBundleId: 'com.example.fitBit',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyBowJxnqIPMdMRy2055H1b0xE46Vume-jA',
-    appId: '1:617009152460:ios:7aa0626941d0d637a11d69',
-    messagingSenderId: '617009152460',
-    projectId: 'kriyetaaa',
-    storageBucket: 'kriyetaaa.appspot.com',
-    iosBundleId: 'com.example.kriyeta.RunnerTests',
+    apiKey: 'AIzaSyDdhxCJQOOEPTHzNMxAzpCCxMSA8HTnZwE',
+    appId: '1:485014065632:ios:cb091237083adca2021b85',
+    messagingSenderId: '485014065632',
+    projectId: 'fitbit-2763f',
+    storageBucket: 'fitbit-2763f.appspot.com',
+    iosBundleId: 'com.example.fitBit.RunnerTests',
   );
 }

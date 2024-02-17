@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "485014065632",
+    "project_id": "fitbit-2763f",
+    "storage_bucket": "fitbit-2763f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:485014065632:android:06c4496dec6a657d021b85",
+        "android_client_info": {
+          "package_name": "com.example.fit_bit"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmTWTyAjI2cDcA0kozKDqSo54RgXcCJBc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,3 +1,5 @@
+import 'package:fit_bit/activity.dart';
+import 'package:fit_bit/analysis.dart';
 import 'package:fit_bit/first_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:pedometer/pedometer.dart';
@@ -13,10 +15,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<Widget> _widgetOptions = <Widget>[
     FirstScreen(),
-    BuildBody(),
-    Text('Friends'),
-    Text('Marketplace'),
-    Text('Notifications'),
+    AnalysisScreen(),
+    ActivityScreen(),
+    Text('Profile'),
 
   ];
 
