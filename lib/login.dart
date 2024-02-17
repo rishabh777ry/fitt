@@ -133,7 +133,7 @@ class _LoginAppState extends State<LoginApp> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => GenderSelectionScreen()),
+                                builder: (context) => RegisterApp()),
                           );
                         },
                         child: Text('Register'),
