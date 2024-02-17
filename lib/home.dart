@@ -1,3 +1,4 @@
+import 'package:fit_bit/first_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:pedometer/pedometer.dart';
 import 'circularsteps.dart';
@@ -11,11 +12,12 @@ class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
 
   List<Widget> _widgetOptions = <Widget>[
+    FirstScreen(),
     BuildBody(),
     Text('Friends'),
     Text('Marketplace'),
     Text('Notifications'),
-    Text('Menu'),
+
   ];
 
   void _onItemTapped(int index) {
@@ -103,7 +105,8 @@ class BuildBody extends StatefulWidget {
 class _BuildBodyState extends State<BuildBody> {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return
+      SingleChildScrollView(
       child: Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -255,7 +258,7 @@ class _BuildBodyState extends State<BuildBody> {
           ],
         ),
       ),
-    );;
+    );
   }
 }
 
