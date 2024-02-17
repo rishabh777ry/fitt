@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'register.dart';
 import 'home.dart';
+import 'gender.dart';
 
 class LoginApp extends StatefulWidget {
   @override
@@ -132,7 +133,7 @@ class _LoginAppState extends State<LoginApp> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => RegisterApp()),
+                                builder: (context) => GenderSelectionScreen()),
                           );
                         },
                         child: Text('Register'),

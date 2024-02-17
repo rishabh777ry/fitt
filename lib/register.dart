@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'home.dart';
+import 'gender.dart';
 
 class RegisterApp extends StatefulWidget {
   @override
@@ -200,7 +200,7 @@ class _RegisterAppState extends State<RegisterApp> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => HomeScreen()),
+                                builder: (context) => GenderSelectionScreen()),
                           );
                         } catch (e) {
                           print('Error registering user: $e');

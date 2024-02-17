@@ -8,13 +8,22 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  StepCounter _stepCounter = StepCounter();
+  int _selectedIndex = 0;
 
-  @override
-  void initState() {
-    super.initState();
-    _stepCounter.initStepCounter();
+  List<Widget> _widgetOptions = <Widget>[
+    BuildBody(),
+    Text('Friends'),
+    Text('Marketplace'),
+    Text('Notifications'),
+    Text('Menu'),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +37,9 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      body: buildBody(),
+      body:  Center(
+        child: _widgetOptions.elementAt(_selectedIndex),
+      ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
@@ -51,11 +62,47 @@ class _HomeScreenState extends State<HomeScreen> {
         selectedItemColor: Color.fromRGBO(130, 141, 251, 1),
         unselectedItemColor: Colors.grey,
         selectedLabelStyle: TextStyle(color: Colors.black),
+        onTap: _onItemTapped,
+        currentIndex: _selectedIndex,
       ),
+
     );
   }
 
-  Widget buildBody() {
+
+
+
+}
+
+class StepCounter {
+  Stream<StepCount>? get stepCountStream => _stepCountStream;
+  late Stream<StepCount> _stepCountStream;
+  int _steps = 0;
+
+  void initStepCounter() {
+    _stepCountStream = Pedometer.stepCountStream;
+
+    _stepCountStream.listen((StepCount event) {
+      _steps = event.steps;
+    });
+  }
+
+  int getSteps() {
+    return _steps;
+  }
+}
+
+
+class BuildBody extends StatefulWidget {
+  const BuildBody({super.key});
+
+  @override
+  State<BuildBody> createState() => _BuildBodyState();
+}
+
+class _BuildBodyState extends State<BuildBody> {
+  @override
+  Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Center(
         child: Column(
@@ -200,19 +247,39 @@ class _HomeScreenState extends State<HomeScreen> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                buildCard('Steps', Icons.directions_walk),
+                BuildCard(name: 'Steps', icon:Icons.directions_walk),
                 SizedBox(height: 10.0),
-                buildCard('Calories', Icons.local_fire_department),
+                BuildCard(name: 'Calories', icon:Icons.local_fire_department),
               ],
             ),
           ],
         ),
       ),
-    );
+    );;
+  }
+}
+
+class BuildCard extends StatefulWidget {
+  final icon;
+  final name;
+  const BuildCard({super.key, required this.icon, required this.name});
+
+  @override
+  State<BuildCard> createState() => _BuildCardState();
+}
+
+class _BuildCardState extends State<BuildCard> {
+  StepCounter _stepCounter = StepCounter();
+
+  @override
+  void initState() {
+    super.initState();
+    _stepCounter.initStepCounter();
   }
 
-  Widget buildCard(String title, IconData icon) {
-    return Container(
+  @override
+  Widget build(BuildContext context) {
+    return    Container(
       padding: EdgeInsets.all(10.0),
       decoration: BoxDecoration(
         color: Colors.grey[200],
@@ -225,12 +292,12 @@ class _HomeScreenState extends State<HomeScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Icon(
-                icon,
+                widget.icon,
                 size: 90.0,
               ),
               SizedBox(height: 10.0),
               Text(
-                title,
+                widget.name,
                 style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
               ),
               StreamBuilder<StepCount>(
@@ -258,24 +325,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-    );
+    );;
   }
 }
 
-class StepCounter {
-  Stream<StepCount>? get stepCountStream => _stepCountStream;
-  late Stream<StepCount> _stepCountStream;
-  int _steps = 0;
-
-  void initStepCounter() {
-    _stepCountStream = Pedometer.stepCountStream;
-
-    _stepCountStream.listen((StepCount event) {
-      _steps = event.steps;
-    });
-  }
-
-  int getSteps() {
-    return _steps;
-  }
-}
