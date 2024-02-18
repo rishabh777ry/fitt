@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home:   StreamBuilder(
+      home: StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.active) {
@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
             // print(FirebaseAuth.instance.currentUser!.uid);
 
             if (snapshot.hasData) {
-             return HomeScreen();
+              return SplashScreen();
             } else if (snapshot.hasError) {
               return Center(
                 child: Text('${snapshot.error}'),
@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
             );
           }
 
-          return LoginApp();
+          return SplashScreen();
         },
       ),
     );

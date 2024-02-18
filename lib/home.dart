@@ -1,9 +1,13 @@
-import 'package:fit_bit/activity.dart';
-import 'package:fit_bit/analysis.dart';
-import 'package:fit_bit/first_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:pedometer/pedometer.dart';
 import 'circularsteps.dart';
+import 'profile.dart';
+import 'activity.dart';
+import 'ml.dart';
+import 'analysis.dart';
+import 'first_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -12,13 +16,44 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
+  String _userName = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserName();
+  }
+
+  Future<void> _loadUserName() async {
+    // Retrieve email from shared preferences
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String userEmail = prefs.getString('user_email') ?? '';
+
+    // Query Firestore to get user document based on email
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .where('email', isEqualTo: userEmail)
+        .limit(1)
+        .get();
+
+    // Check if user document exists
+    if (querySnapshot.docs.isNotEmpty) {
+      // Extract user details from the document
+      var userDoc = querySnapshot.docs.first;
+      String firstName = userDoc['firstName'];
+      String lastName = userDoc['lastName'];
+      setState(() {
+        // Set the username for display
+        _userName = '$firstName $lastName';
+      });
+    }
+  }
 
   List<Widget> _widgetOptions = <Widget>[
     FirstScreen(),
     AnalysisScreen(),
-    ActivityScreen(),
-    Text('Profile'),
-
+    MyApp(),
+    MyProfileScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -27,20 +62,19 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pranic Balance'),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.notifications),
-            onPressed: () {},
+        title: Center(
+          child: Text(
+            'Pranic Balance',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
           ),
-        ],
+        ),
+        actions: [],
       ),
-      body:  Center(
+      body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -68,13 +102,8 @@ class _HomeScreenState extends State<HomeScreen> {
         onTap: _onItemTapped,
         currentIndex: _selectedIndex,
       ),
-
     );
   }
-
-
-
-
 }
 
 class StepCounter {
@@ -95,9 +124,10 @@ class StepCounter {
   }
 }
 
-
 class BuildBody extends StatefulWidget {
-  const BuildBody({super.key});
+  final String userName;
+
+  const BuildBody({Key? key, required this.userName}) : super(key: key);
 
   @override
   State<BuildBody> createState() => _BuildBodyState();
@@ -106,8 +136,7 @@ class BuildBody extends StatefulWidget {
 class _BuildBodyState extends State<BuildBody> {
   @override
   Widget build(BuildContext context) {
-    return
-      SingleChildScrollView(
+    return SingleChildScrollView(
       child: Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -129,7 +158,7 @@ class _BuildBodyState extends State<BuildBody> {
                         ),
                       ),
                       Text(
-                        'smrth sahu',
+                        widget.userName, // Display user's name
                         style: TextStyle(
                           fontSize: 22.0,
                           fontWeight: FontWeight.bold,
@@ -251,9 +280,15 @@ class _BuildBodyState extends State<BuildBody> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                BuildCard(name: 'Steps', icon:Icons.directions_walk),
+                BuildCard(name: 'Steps', icon: Icons.directions_walk),
                 SizedBox(height: 10.0),
-                BuildCard(name: 'Calories', icon:Icons.local_fire_department),
+                BuildCard(
+                    name: 'Calories',
+                    icon: Icons.local_fire_department,
+                    isActive: true),
+                SizedBox(height: 10.0),
+                BuildCard(name: 'Spo2', icon: Icons.favorite, isActive: true),
+                SizedBox(height: 10.0),
               ],
             ),
           ],
@@ -264,29 +299,25 @@ class _BuildBodyState extends State<BuildBody> {
 }
 
 class BuildCard extends StatefulWidget {
-  final icon;
-  final name;
-  const BuildCard({super.key, required this.icon, required this.name});
+  final IconData icon;
+  final String name;
+  final bool isActive;
+
+  const BuildCard(
+      {Key? key, required this.icon, required this.name, this.isActive = false})
+      : super(key: key);
 
   @override
-  State<BuildCard> createState() => _BuildCardState();
+  _BuildCardState createState() => _BuildCardState();
 }
 
 class _BuildCardState extends State<BuildCard> {
-  StepCounter _stepCounter = StepCounter();
-
-  @override
-  void initState() {
-    super.initState();
-    _stepCounter.initStepCounter();
-  }
-
   @override
   Widget build(BuildContext context) {
-    return    Container(
+    return Container(
       padding: EdgeInsets.all(10.0),
       decoration: BoxDecoration(
-        color: Colors.grey[200],
+        color: widget.isActive ? Colors.blueAccent : Colors.grey[200],
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: Stack(
@@ -294,42 +325,30 @@ class _BuildCardState extends State<BuildCard> {
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
                 widget.icon,
                 size: 90.0,
+                color: widget.isActive ? Colors.white : null,
               ),
               SizedBox(height: 10.0),
               Text(
                 widget.name,
-                style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.bold,
+                    color: widget.isActive ? Colors.white : null),
               ),
-              StreamBuilder<StepCount>(
-                stream: _stepCounter.stepCountStream,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return Column(
-                      children: [
-                        Text(
-                          '${snapshot.data!.steps}',
-                          style: TextStyle(fontSize: 16.0),
-                        ),
-                        CircularStepIndicator(steps: snapshot.data!.steps),
-                      ],
-                    );
-                  } else {
-                    return Text(
-                      'Loading...',
-                      style: TextStyle(fontSize: 16.0),
-                    );
-                  }
-                },
-              ),
+              if (widget.isActive)
+                Text(
+                  'Active',
+                  style: TextStyle(fontSize: 14.0, color: Colors.white),
+                ),
             ],
           ),
         ],
       ),
-    );;
+    );
   }
 }
-

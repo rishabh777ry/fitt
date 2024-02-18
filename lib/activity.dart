@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'ml.dart';
 // import 'ml.dart';
 
 class ActivityScreen extends StatefulWidget {
@@ -29,13 +28,6 @@ class _ActivityScreenState extends State<ActivityScreen> {
   }
 
   // Method to handle model download
-  void downloadModel() {
-    // Implement your logic to download the model here
-    FirebaseMLService.downloadModel();
-    setState(() {
-      isModelDownloaded = true; // Update model download status
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,19 +43,8 @@ class _ActivityScreenState extends State<ActivityScreen> {
               for (final pose in yogaPoses) YogaPoseCard(pose: pose),
               SizedBox(
                   height: 20), // Add some space between yoga poses and button
-              ElevatedButton(
-                onPressed: isModelDownloaded
-                    ? null
-                    : downloadModel, // Disable button if model is already downloaded
-                child: Text('Download Model'),
-              ),
+
               SizedBox(height: 10),
-              Text(
-                isModelDownloaded ? 'Model Downloaded' : 'Model Not Downloaded',
-                style: TextStyle(
-                  color: isModelDownloaded ? Colors.green : Colors.red,
-                ),
-              ),
             ],
           ),
         ),
