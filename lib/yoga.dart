@@ -1,6 +1,11 @@
+import 'dart:convert';
+
+import 'package:fit_bit/globle.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'model.dart';
 import 'card.dart';
+import 'package:http/http.dart' as http;
 
 class MCQScreen extends StatefulWidget {
   @override
@@ -65,12 +70,7 @@ class _MCQScreenState extends State<MCQScreen> {
                       onPressed: () {
                         // Handle the selected options
                         print('Selected options: $_selectedOptions');
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => YogaPosturesList(),
-                          ),
-                        );
+                        submit();
                       },
                       child: Text('Submit'),
                     )),
@@ -118,5 +118,40 @@ class _MCQScreenState extends State<MCQScreen> {
         SizedBox(height: 16.0),
       ],
     );
+  }
+
+  Future<void> submit() async {
+    try {
+      final url = 'https://ayushpatidar.us-east-1.modelbit.com/v1/magic/latest';
+      final data = {'data': _selectedOptions};
+
+      final response = await http.post(
+        Uri.parse(url),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(data),
+      );
+
+      if (response.statusCode == 200) {
+        print('Request successful');
+        Fluttertoast.showToast(msg: 'successful');
+        responseData = json.decode(response.body);
+        print('Response body: ${response.body}');
+        print(responseData['data'][0]);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => YogaPosturesList(),
+          ),
+        );
+      } else {
+        Fluttertoast.showToast(
+            msg: 'Request failed with status: ${response.statusCode}');
+      }
+    } catch (e) {
+      Fluttertoast.showToast(msg: "error ::: $e");
+      print(e);
+    }
   }
 }
