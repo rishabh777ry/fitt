@@ -42,9 +42,10 @@ class HomeScreen extends StatelessWidget {
 
 class CarouselWidget extends StatelessWidget {
   final List<String> images = [
-    'assets/b.jpg',
     'assets/p.jpg',
-    'assets/b.jpg',
+    'assets/Chandra Namaskar.jpeg',
+    'assets/Surya Namaskar.jpeg',
+    'assets/Vrikshasana.jpeg',
     // Add more image paths as needed
   ];
 
@@ -85,39 +86,49 @@ class CarouselWidget extends StatelessWidget {
 class ButtonRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         ElevatedButton(
           onPressed: () {
-            // Handle navigation to Meditation Chants screen
+            // Handle navigation to Yoga screen
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => MeditationChantsScreen()),
+              MaterialPageRoute(builder: (context) => MCQScreen()),
             );
           },
-          child: Text('Meditation Chants'),
+          child: Text(
+            'Yoga',
+            style: TextStyle(fontSize: 20), // Increase font size
+          ),
         ),
-        ElevatedButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => BinauralBeatsScreen()),
-            );
-            // Handle navigation to Binaural Beats screen
-          },
-          child: Text('Binaural Beats'),
-        ),
-        ElevatedButton(
-          onPressed: () {
-            // Handle navigation to Meditation Chants screen
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: ((context) => MCQScreen()),
-                ));
-          },
-          child: Text('Yoga'),
+        SizedBox(height: 10), // Add spacing between the buttons
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                // Handle navigation to Meditation Chants screen
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => MeditationChantsScreen()),
+                );
+              },
+              child: Text('Meditation Chants'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => BinauralBeatsScreen()),
+                );
+                // Handle navigation to Binaural Beats screen
+              },
+              child: Text('Binaural Beats'),
+            ),
+          ],
         ),
       ],
     );

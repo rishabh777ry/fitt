@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class YogaPosturesList extends StatefulWidget {
@@ -8,119 +7,111 @@ class YogaPosturesList extends StatefulWidget {
 }
 
 class _YogaPosturesListState extends State<YogaPosturesList> {
-  List<YogaPosture> yogaPostures = [];
+  final List<String> yogaPostures = [
+    'Adho Mukha Svanasana',
+    'Adho Mukha Virksasana',
+    'Bakasana',
+    'Chandra Namaskar',
+    'Dhanurasana',
+    'Pranayama',
+    'Savasana',
+    'Setu Bandhasana',
+    'Sirsasana',
+    'Surya Namaskar',
+    'Tadasana',
+    'Trikonasana',
+    'Ustrasana',
+    'Vrikshasana',
+  ];
+
+  String _selectedYogaPosture1 = '';
+  String _selectedYogaPosture2 = '';
 
   @override
   void initState() {
     super.initState();
-    fetchYogaPostures();
+    _selectRandomYogaPostures();
   }
 
-  void fetchYogaPostures() async {
-    DocumentSnapshot<Map<String, dynamic>> snapshot =
-        await FirebaseFirestore.instance.collection('yoga').doc('images').get();
-
-    Map<String, dynamic> data = snapshot.data()!;
-    List<YogaPosture> fetchedYogaPostures = [];
-
-    data.forEach((key, value) {
-      fetchedYogaPostures.add(
-        YogaPosture(
-          name: value['name'],
-          muscleGroup: value['muscleGroup'],
-          image: value['image'],
-          description: value['description'],
-        ),
-      );
-    });
-
-    // Shuffle the list of yoga postures
-    fetchedYogaPostures.shuffle();
+  void _selectRandomYogaPostures() {
+    final Random random = Random();
+    final int randomNumber1 = random.nextInt(yogaPostures.length);
+    int randomNumber2;
+    do {
+      randomNumber2 = random.nextInt(yogaPostures.length);
+    } while (randomNumber1 == randomNumber2);
 
     setState(() {
-      yogaPostures = fetchedYogaPostures;
+      _selectedYogaPosture1 = yogaPostures[randomNumber1];
+      _selectedYogaPosture2 = yogaPostures[randomNumber2];
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return yogaPostures.isEmpty
-        ? Center(child: CircularProgressIndicator())
-        : ListView.builder(
-            itemCount: yogaPostures.length,
-            itemBuilder: (BuildContext context, int index) {
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: YogaPostureCard(yogaPosture: yogaPostures[index]),
-              );
-            },
-          );
-  }
-}
-
-class YogaPosture {
-  final String name;
-  final String muscleGroup;
-  final String image;
-  final String description;
-
-  YogaPosture({
-    required this.name,
-    required this.muscleGroup,
-    required this.image,
-    required this.description,
-  });
-}
-
-class YogaPostureCard extends StatelessWidget {
-  final YogaPosture yogaPosture;
-
-  YogaPostureCard({required this.yogaPosture});
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      elevation: 3,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(8)),
-            child: Image.network(
-              yogaPosture.image,
-              height: 200,
-              fit: BoxFit.cover,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  yogaPosture.name,
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Yoga Postures'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Card(
+              elevation: 5,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      _selectedYogaPosture1,
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
-                ),
-                SizedBox(height: 4),
-                Text(
-                  'Target Muscle Group: ${yogaPosture.muscleGroup}',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.grey[600],
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.asset(
+                      'assets/${_selectedYogaPosture1}.jpeg',
+                      height: 200,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                ),
-                SizedBox(height: 8),
-                Text(
-                  yogaPosture.description,
-                  style: TextStyle(fontSize: 14),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+            SizedBox(height: 20),
+            Card(
+              elevation: 5,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      _selectedYogaPosture2,
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.asset(
+                      'assets/${_selectedYogaPosture2}.jpeg',
+                      height: 200,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

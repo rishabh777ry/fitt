@@ -68,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: Center(
           child: Text(
-            'Pranic Balance',
+            'Ashtang',
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
           ),
         ),

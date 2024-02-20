@@ -109,7 +109,9 @@ class _LoginAppState extends State<LoginApp> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     IconButton(
-                      onPressed: () {}, // Google login button
+                      onPressed: () {
+                        // Implement Google login
+                      }, // Google login button
                       icon: Container(
                         height: 24, // Adjust the height as needed
                         width: 24, // Adjust the width as needed
