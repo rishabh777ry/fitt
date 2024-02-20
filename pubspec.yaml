@@ -86,45 +86,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/gym.tflite
-    - assets/yoga.tflite
-    - assets/b.jpg
-    - assets/p.jpg
-    - assets/login.png
-    - assets/google_logo.png
-    - assets/registration.png
-    - assets/app.png
-    - assets/logo.png
-    - assets/man.png
-    - assets/women.png
-    - assets/fit.png
-    - assets/fatt.png
-    - assets/slimm.png
-    - assets/logo.png
-    - assets/zumba.png
-    - assets/gym.png
-    - assets/Adho Mukha Svanasana.jpeg
-    - assets/Virksasana.jpeg
-    - assets/Bakasana.jpeg
-    - assets/Chandra Namaskar.jpeg
-    - assets/Dhanurasana.jpeg
-    - assets/Pranayama.jpeg
-    - assets/Savasana.jpeg
-    - assets/Setu Bandhasana.jpeg
-    - assets/Sirsasana.jpeg
-    - assets/Virabhadrasana1.jpeg
-    - assets/Virabhadrasana2.jpeg
-    - assets/Surya Namaskar.jpeg
-    - assets/tadasana.jpeg
-    - assets/Trikonasana.jpeg
-    - assets/Ustrasana.jpeg
-    - assets/Vrikshasana.jpeg
-    - assets/b1.mp3
-    - assets/b2.mp3
-    - assets/b3.mp3
-    - assets/r1.mp3
-    - assets/r2.mp3
-    - assets/r3.mp3
+    - assets/
 
   #   - images/a_dot_ham.jpeg
 
