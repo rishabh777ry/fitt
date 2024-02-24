@@ -101,7 +101,7 @@ class _MCQScreenState extends State<MCQScreen> {
                       value: _selectedOptions.contains(question),
                       onChanged: (checked) {
                         setState(() {
-                          if (checked == true && _selectedOptions.length < 5) {
+                          if (checked == true && _selectedOptions.length < 4) {
                             _selectedOptions.add(question);
                           } else if (checked == false) {
                             _selectedOptions.remove(question);
@@ -150,7 +150,7 @@ class _MCQScreenState extends State<MCQScreen> {
             msg: 'Request failed with status: ${response.statusCode}');
       }
     } catch (e) {
-      Fluttertoast.showToast(msg: "error ::: $e");
+      Fluttertoast.showToast(msg: "error : $e");
       print(e);
     }
   }

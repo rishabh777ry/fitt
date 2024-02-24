@@ -1,5 +1,6 @@
 import 'package:fit_bit/home.dart';
 import 'package:fit_bit/login.dart';
+import 'package:fit_bit/splesh_home.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -27,7 +28,8 @@ class MyApp extends StatelessWidget {
             // print(FirebaseAuth.instance.currentUser!.uid);
 
             if (snapshot.hasData) {
-              return SplashScreen();
+              print('hasdata');
+              return SplashHomeScreen();
             } else if (snapshot.hasError) {
               return Center(
                 child: Text('${snapshot.error}'),

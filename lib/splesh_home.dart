@@ -1,14 +1,14 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'login.dart';
+
 import 'home.dart';
 
-class SplashScreen extends StatefulWidget {
+class SplashHomeScreen extends StatefulWidget {
   @override
-  _SplashScreenState createState() => _SplashScreenState();
+  _SplashHomeScreenState createState() => _SplashHomeScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashHomeScreenState extends State<SplashHomeScreen> {
   @override
   void initState() {
     super.initState();
@@ -16,13 +16,15 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void navigateUser() async {
+    // Simulate a delay of 2 seconds
     await Future.delayed(Duration(seconds: 1));
 
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => LoginApp()),
-      );
-    }
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => HomeScreen()),
+    );
+
+  }
 
 
   @override
@@ -45,3 +47,4 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 }
+

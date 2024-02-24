@@ -15,19 +15,21 @@ class _YogaPosturesListState extends State<YogaPosturesList> {
         title: Text('Yoga Postures'),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CardForYoaga(data: 0),
-            SizedBox(height: 20),
-            CardForYoaga(data: 1),
-            SizedBox(height: 20),
-            CardForYoaga(data: 2),
-            SizedBox(height: 20),
-            CardForYoaga(data: 3),
-            SizedBox(height: 20),
-          
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CardForYoaga(data: 0),
+              SizedBox(height: 20),
+              CardForYoaga(data: 1),
+              SizedBox(height: 20),
+              CardForYoaga(data: 2),
+              SizedBox(height: 20),
+              CardForYoaga(data: 3),
+              SizedBox(height: 20),
+            
+            ],
+          ),
         ),
       ),
     );
@@ -51,7 +53,7 @@ class CardForYoaga extends StatelessWidget{
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      responseData['data'][1],
+                      responseData['data'][data],
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
@@ -61,7 +63,8 @@ class CardForYoaga extends StatelessWidget{
                   ClipRRect(
                     borderRadius: BorderRadius.circular(8),
                     child: Image.asset(
-                      'assets/${responseData['data'][data]}.jpeg',
+                      'assets/aasan/${responseData['data'][data]}.jpeg',
+                      // 'assets/vrikshasana.jpeg',
                       height: 200,
                       width: double.infinity,
                       fit: BoxFit.cover,

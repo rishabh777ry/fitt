@@ -43,9 +43,9 @@ class HomeScreen extends StatelessWidget {
 class CarouselWidget extends StatelessWidget {
   final List<String> images = [
     'assets/p.jpg',
-    'assets/Chandra Namaskar.jpeg',
-    'assets/Surya Namaskar.jpeg',
-    'assets/Vrikshasana.jpeg',
+    'assets/chandra namaskar.jpeg',
+    'assets/surya namaskar.jpeg',
+    'assets/vrikshasana.jpeg',
     // Add more image paths as needed
   ];
 
